@@ -39,7 +39,7 @@
     <orderEntry type="library" name="Leiningen: medley:0.6.0" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/clojure:1.8.0" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/java.classpath:0.2.0" level="project" />
-    <orderEntry type="library" name="Leiningen: org.clojure/java.jdbc:0.4.1" level="project" />
+    <orderEntry type="library" name="Leiningen: org.clojure/java.jdbc:0.2.2" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/tools.macro:0.1.1" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/tools.namespace:0.2.5" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/tools.nrepl:0.2.12" level="project" />
@@ -49,7 +49,7 @@
     <orderEntry type="library" name="Leiningen: org.eclipse.jetty/jetty-io:9.2.10.v20150310" level="project" />
     <orderEntry type="library" name="Leiningen: org.eclipse.jetty/jetty-server:9.2.10.v20150310" level="project" />
     <orderEntry type="library" name="Leiningen: org.eclipse.jetty/jetty-util:9.2.10.v20150310" level="project" />
-    <orderEntry type="library" name="Leiningen: org.postgresql/postgresql:9.2-1002-jdbc4" level="project" />
+    <orderEntry type="library" name="Leiningen: org.postgresql/postgresql:9.4-1201-jdbc41" level="project" />
     <orderEntry type="library" name="Leiningen: org.tcrawley/dynapath:0.2.3" level="project" />
     <orderEntry type="library" name="Leiningen: ring-mock:0.1.5" level="project" />
     <orderEntry type="library" name="Leiningen: ring/ring-codec:1.0.0" level="project" />
