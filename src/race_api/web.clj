@@ -1,12 +1,11 @@
 (ns race-api.web
   (:require [compojure.core :refer [defroutes GET POST]]
             [ring.middleware.json :as json]
+            [ring.util.response :refer [response]]
             [compojure.handler :as handler]
             [race-api.db.query :as query]
             [clojure.string :as str])
   (:gen-class))
-
-(require '[ring.util.response :refer [response]])
 
 (defn index []
     (into [] (query/get-all-things)))
