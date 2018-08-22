@@ -11,9 +11,9 @@
 (defn index []
     (into [] (query/get-all-things)))
 
-(defn create [stuff]
-  (when-not (str/blank? (str stuff))
-    (query/insert-thing (str stuff))))
+(defn create [thing]
+  (when-not (str/blank? (str thing))
+    (query/insert-thing (str thing))))
 
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
