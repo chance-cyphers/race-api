@@ -2,27 +2,18 @@
   (:require [compojure.core :refer [defroutes GET POST]]
             [ring.middleware.json :as json]
             [compojure.handler :as handler]
+            [race-api.db.query :as query]
             [clojure.string :as str])
-  (:use [korma.db]
-        [korma.core])
   (:gen-class))
 
 (require '[ring.util.response :refer [response]])
 
-(defdb db (postgres {
-             :host "localhost"
-             :port "5432"
-             :db "firstDb"}))
-
-(defentity thing)
-
 (defn index []
-    (into [] (select thing)))
+    (into [] (query/get-all-things)))
 
 (defn create [stuff]
   (when-not (str/blank? (str stuff))
-    (insert thing
-            (values {:body (str stuff)}))))
+    (query/insert-thing (str stuff))))
 
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
