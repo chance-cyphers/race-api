@@ -22,8 +22,3 @@
   (-> (handler/api routes)
       (json/wrap-json-body)
       (json/wrap-json-response)))
-
-;(defn -main []
-;  (schema/migrate)
-;  (ring/run-jetty #'routes {:port 8080 :join? false}))
-

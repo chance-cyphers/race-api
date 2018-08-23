@@ -10,6 +10,7 @@ pom.xml.asc
 .hgignore
 .hg/
 
+# don't ask
 /pg
 /.idea
 *.iml
