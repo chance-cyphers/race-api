@@ -1,2 +1,2 @@
-web: java $JVM_OPTS -jar target/race-api-standalone.jar
+web: lein ring server
 release: echo "(use 'lobos.migrations) (run-migrations)" | lein repl
