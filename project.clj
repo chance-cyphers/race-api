@@ -16,4 +16,4 @@
   :ring {:handler race-api.web/application}
   :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                                   [ring-mock "0.1.5"]]}
-             :uberjar {:aot :all}})
+             :uberjar {:main race-api.web, :aot :all}})
