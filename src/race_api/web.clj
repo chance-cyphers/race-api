@@ -1,5 +1,6 @@
 (ns race-api.web
   (:require [compojure.core :refer [defroutes GET POST]]
+            [ring.adapter.jetty :as ring]
             [ring.middleware.json :as json]
             [ring.util.response :refer [response]]
             [compojure.handler :as handler]
@@ -22,3 +23,11 @@
   (-> (handler/api routes)
       (json/wrap-json-body)
       (json/wrap-json-response)))
+
+(defn start [port]
+  (ring/run-jetty application {:port port
+                               :join? false}))
+
+(defn -main []
+  (let [port (Integer. (or (System/getenv "PORT") "8080"))]
+    (start port)))
