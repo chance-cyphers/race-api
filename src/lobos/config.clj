@@ -1,4 +1,5 @@
 (ns lobos.config
-  (:use lobos.connectivity race-api.db.database))
+  (:require [lobos.connectivity :as lobos]
+            [race-api.db.database :as db]))
 
-;(open-global db-connection-info)
+(lobos/open-global db/db-connection-info)

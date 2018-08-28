@@ -5,6 +5,7 @@
             [ring.util.response :refer [response]]
             [compojure.handler :as handler]
             [race-api.db.query :as query]
+            [lobos.migrations :as migrations]
             [clojure.string :as str])
   (:gen-class))
 

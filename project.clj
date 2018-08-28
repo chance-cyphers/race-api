@@ -14,7 +14,8 @@
   :main ^:skip-aot race-api.web
   :uberjar-name "race-api-standalone.jar"
   :plugins [[lein-ring "0.8.13"]]
-  :ring {:handler race-api.web/application}
+  :ring {:handler race-api.web/application
+         :init lobos.migrations/run-migration}
   :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                                   [ring-mock "0.1.5"]]}
              :uberjar {:main race-api.web, :aot :all}})
