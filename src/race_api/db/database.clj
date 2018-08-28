@@ -13,9 +13,11 @@
        :password    (get user-and-password 1)          ; may be nil
        :subname     (if (= -1 (.getPort db-uri))
                       (format "//%s%s" (.getHost db-uri) (.getPath db-uri))
-                      (format "//%s:%s%s" (.getHost db-uri) (.getPort db-uri) (.getPath db-uri)))})
+                      (format "//%s:%s%s" (.getHost db-uri) (.getPort db-uri) (.getPath db-uri)))
+       :unsafe      true})
     {:classname   "org.postgresql.Driver"
      :subprotocol "postgresql"
-     :subname     "//localhost:5432/firstDb"}))
+     :subname     "//localhost:5432/firstDb"
+     :unsafe      true}))
 
 (defdb db db-connection-info)
