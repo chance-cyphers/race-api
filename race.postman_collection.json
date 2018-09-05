@@ -10,12 +10,12 @@
 			"description": "",
 			"item": [
 				{
-					"name": "enter race",
+					"name": "first entrant",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "ba7f2bc0-98bf-4ef9-be0c-3ed14e641e1d",
+								"id": "5074bde3-239d-4d5e-b492-bc1927f2fc6b",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"status is one more than good\", function() {",
@@ -23,13 +23,13 @@
 									"});",
 									"",
 									"pm.test(\"returns resource\", function() {",
-									"    pm.expect(pm.response.json().userId).to.equal(\"12345\");",
+									"    pm.expect(pm.response.json().userId).to.equal(\"1\");",
 									"});",
 									"",
 									"pm.test(\"returns link for track\", function() {",
 									"    let body = pm.response.json();",
 									"    pm.expect(body.links.track).to.include(\"/track\");",
-									"    pm.globals.set(\"trackLink\", body.links.track); ",
+									"    pm.globals.set(\"firstTrackLink\", body.links.track); ",
 									"});"
 								]
 							}
@@ -45,7 +45,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userId\": \"12345\"\n}"
+							"raw": "{\n\t\"userId\": \"1\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/entrant",
@@ -61,7 +61,7 @@
 					"response": []
 				},
 				{
-					"name": "get track",
+					"name": "get track 1",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -100,9 +100,139 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "{{trackLink}}",
+							"raw": "{{firstTrackLink}}",
 							"host": [
-								"{{trackLink}}"
+								"{{firstTrackLink}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "second entrant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e91c33a2-2459-4288-ab21-2bd9c9673c58",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"track link should be same as first entrant\", function() {",
+									"    let firstEntrantTrackLink = pm.globals.get(\"firstTrackLink\");",
+									"    let responseTrackLink = pm.response.json().links.track;",
+									"    pm.expect(responseTrackLink).to.equal(firstEntrantTrackLink);",
+									"",
+									"    pm.globals.set(\"secondTrackLink\", pm.response.json().links.track); ",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\": \"2\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/entrant",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"entrant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "third entrant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ffe978d0-43e4-4803-a6a1-f6ca35fa4f0c",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"track link should be different than first entrant\", function() {",
+									"    let firstEntrantTrackLink = pm.globals.get(\"firstTrackLink\");",
+									"    let responseTrackLink = pm.response.json().links.track;",
+									"    pm.expect(responseTrackLink).to.not.equal(firstEntrantTrackLink);",
+									"    ",
+									"    pm.globals.set(\"thirdTrackLink\", pm.response.json().links.track); ",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/entrant",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"entrant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get track 1 again",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8c4d20e2-110f-4be9-a36e-8e0e8b400a03",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "33060914-d147-498c-942e-0b51c621172b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"track has started status\", function() {",
+									"    pm.expect(pm.response.json().raceStatus).to.equal(\"started\");",
+									"});",
+									"",
+									"pm.test(\"track has first two entrants\", function() {",
+									"    let entrants = pm.response.json().entrants;",
+									"    pm.expect(entrants.length).to.equal(2);",
+									"    pm.expect(entrants[0].userId).to.equal(\"1\");",
+									"    pm.expect(entrants[1].userId).to.equal(\"2\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{firstTrackLink}}",
+							"host": [
+								"{{firstTrackLink}}"
 							]
 						}
 					},
