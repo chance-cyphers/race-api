@@ -2,7 +2,7 @@
   (:require [compojure.core :refer [defroutes GET POST]]
             [ring.adapter.jetty :as ring]
             [ring.middleware.json :as json]
-            [ring.util.response :refer [response]]
+            [ring.util.response :refer [response status]]
             [compojure.handler :as handler]
             [race-api.db.query :as query]
             [lobos.migrations :as migrations]
@@ -18,6 +18,7 @@
 
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
+           (POST "/entrant" {} (status (response (str "entrantStuff")) 201))
            (POST "/thing" {stuff :body} (response (create stuff))))
 
 (def application

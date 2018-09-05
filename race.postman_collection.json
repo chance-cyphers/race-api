@@ -1,0 +1,56 @@
+{
+	"info": {
+		"_postman_id": "09868d39-a163-4ebf-90fd-01cc3beac95e",
+		"name": "race",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "match",
+			"description": "",
+			"item": [
+				{
+					"name": "localhost:8080/entrant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "35646031-fcd0-46eb-856e-f42172c40a67",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"stuff works at all\", function() {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\": \"12345\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/entrant",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"entrant"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
