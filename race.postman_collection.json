@@ -10,16 +10,26 @@
 			"description": "",
 			"item": [
 				{
-					"name": "localhost:8080/entrant",
+					"name": "enter race",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "35646031-fcd0-46eb-856e-f42172c40a67",
+								"id": "ba7f2bc0-98bf-4ef9-be0c-3ed14e641e1d",
 								"type": "text/javascript",
 								"exec": [
-									"pm.test(\"stuff works at all\", function() {",
+									"pm.test(\"status is one more than good\", function() {",
 									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"returns resource\", function() {",
+									"    pm.expect(pm.response.json().userId).to.equal(\"12345\");",
+									"});",
+									"",
+									"pm.test(\"returns link for track\", function() {",
+									"    let body = pm.response.json();",
+									"    pm.expect(body.links.track).to.include(\"/track\");",
+									"    pm.globals.set(\"trackLink\", body.links.track); ",
 									"});"
 								]
 							}
@@ -45,6 +55,54 @@
 							"port": "8080",
 							"path": [
 								"entrant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get track",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "05e430c2-d04f-49bf-9431-eef9f32430db",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5df38072-3e21-4361-ac0c-e1eab8cf43a2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"status is good\", function() {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"track has waiting status\", function() {",
+									"    pm.expect(pm.response.json().raceStatus).to.equal(\"waiting\");",
+									"});",
+									"",
+									"pm.test(\"track has first entrant only\", function() {",
+									"    let entrants = pm.response.json().entrants;",
+									"    pm.expect(entrants.length).to.equal(1);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{trackLink}}",
+							"host": [
+								"{{trackLink}}"
 							]
 						}
 					},

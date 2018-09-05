@@ -18,7 +18,8 @@
 
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
-           (POST "/entrant" {} (status (response (str "entrantStuff")) 201))
+           (POST "/entrant" {} (status (response {:userId "12345" :links {:track "localhost:8080/track/32"}}) 201))
+           (GET "/track/:trackId" [] (response {:raceStatus "waiting" :entrants [{}]}))
            (POST "/thing" {stuff :body} (response (create stuff))))
 
 (def application
