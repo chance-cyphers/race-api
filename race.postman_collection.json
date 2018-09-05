@@ -237,6 +237,41 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get track 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "14945b99-f4b4-4bf8-a761-3e5f06fcc33a",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"track has waiting status\", function() {",
+									"    pm.expect(pm.response.json().raceStatus).to.equal(\"waiting\");",
+									"});",
+									"",
+									"pm.test(\"track has only third entrant\", function() {",
+									"    let entrants = pm.response.json().entrants;",
+									"    pm.expect(entrants.length).to.equal(1);",
+									"    pm.expect(entrants[0].userId).to.equal(\"3\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{secondTrackLink}}",
+							"host": [
+								"{{secondTrackLink}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
