@@ -17,7 +17,9 @@
        :unsafe      true})
     {:classname   "org.postgresql.Driver"
      :subprotocol "postgresql"
-     :subname     "//localhost:5432/firstDb"
+     :subname     "//localhost:5432/raceDb"
+     :user        "foo"
+     :password    "foo"
      :unsafe      true}))
 
 (defdb db db-connection-info)
