@@ -9,4 +9,11 @@
                                     (varchar :body 256))))
               (down [] (drop (table :thing))))
 
+(defmigration create-entrant
+              (up [] (create(table :entrant
+                                   (integer :id :auto-inc :primary-key)
+                                   (varchar :userId 64)
+                                   (varchar :trackId 64))))
+              (down [] (drop (table :entrant))))
+
 (defn run-migrations [] (migrate))
