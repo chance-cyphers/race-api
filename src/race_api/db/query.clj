@@ -4,6 +4,7 @@
 
 (defentity thing)
 (defentity entrant)
+(defentity track)
 
 (defn get-all-things [] (select thing))
 
@@ -11,6 +12,16 @@
   (insert thing (values {:body (str stuff)})))
 
 (defn insert-entrant [entrantData]
-  (insert entrant (values {
-                           :userId (get entrantData "userId")
+  (insert entrant (values {:userId (get entrantData "userId")
                            :trackId "fakeTrack"})))
+
+(defn get-track-with-status [status]
+  (select track (where {:status status})))
+
+(defn create-track [status]
+  (insert track (values {:status status})))
+
+(defn update-track-status [trackId status]
+  (update track
+          (set-fields {:status status})
+          (where {:id trackId})))

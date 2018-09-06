@@ -16,4 +16,10 @@
                                    (varchar :trackId 64))))
               (down [] (drop (table :entrant))))
 
+(defmigration create-track
+              (up [] (create(table :track
+                                   (integer :id :auto-inc :primary-key)
+                                   (varchar :status 64))))
+              (down [] (drop (table :entrant))))
+
 (defn run-migrations [] (migrate))

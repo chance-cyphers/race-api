@@ -5,7 +5,6 @@
             [ring.util.response :refer [response status]]
             [compojure.handler :as handler]
             [race-api.db.query :as query]
-            [lobos.migrations :as migrations]
             [clojure.string :as str])
   (:gen-class))
 
@@ -16,9 +15,12 @@
   (when-not (str/blank? (str thing))
     (query/insert-thing (str thing))))
 
+(defn create-entrant [entrant]
+  (status (response (query/insert-entrant entrant)) 201))
+
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
-           (POST "/entrant" {entrant :body} (status (response (query/insert-entrant entrant)) 201))
+           (POST "/entrant" {entrant :body} (create-entrant entrant))
            (GET "/track/:trackId" [] (response {:raceStatus "waiting" :entrants [{}]}))
            (POST "/thing" {stuff :body} (response (create stuff))))
 
