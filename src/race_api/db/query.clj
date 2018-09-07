@@ -13,7 +13,7 @@
 
 (defn insert-entrant [entrantData]
   (insert entrant (values {:userId (get entrantData "userId")
-                           :trackId "fakeTrack"})))
+                           :trackId (get entrantData "trackId")})))
 
 (defn get-track-with-status [status]
   (select track (where {:status status})))
