@@ -3,12 +3,7 @@
                             bigint boolean char double float time])
   (:use (lobos [migration :only [defmigration]] core schema) lobos.config))
 
-(defmigration create-thing
-              (up [] (create(table :thing
-                                    (integer :id :auto-inc :primary-key)
-                                    (varchar :body 256))))
-              (down [] (drop (table :thing))))
-
+;create table entrant (id serial primary key, "trackId" varchar(64), "userId" varchar(64));
 (defmigration create-entrant
               (up [] (create(table :entrant
                                    (integer :id :auto-inc :primary-key)
@@ -16,6 +11,7 @@
                                    (varchar :trackId 64))))
               (down [] (drop (table :entrant))))
 
+;create table track (id serial primary key, status varchar(32));
 (defmigration create-track
               (up [] (create(table :track
                                    (integer :id :auto-inc :primary-key)
