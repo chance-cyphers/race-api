@@ -15,7 +15,7 @@
   (status (response
             {:id     (:id entrant)
              :userId (:userId entrant)
-             :links  {:track (str service-url "/track" (:trackId entrant))}}) 201))
+             :links  {:track (str service-url "/track/" (:trackId entrant))}}) 201))
 
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
