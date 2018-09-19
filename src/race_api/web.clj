@@ -10,15 +10,21 @@
   (:gen-class))
 
 (defn index []
-    (into [] (query/get-all-things)))
+  (into [] (query/get-all-things)))
 
 (defn create [thing]
   (when-not (str/blank? (str thing))
     (query/insert-thing (str thing))))
 
+(defn post-entrant-response [entrant]
+  (status (response
+            {:id     (:id entrant)
+             :userId (:userId entrant)
+             :links  {:track (str "localhost:8080/track" (:trackId entrant))}}) 201))
+
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
-           (POST "/entrant" {entrant :body} (status (response (match/enter-racer entrant)) 201))
+           (POST "/entrant" {entrant :body} (post-entrant-response (match/enter-racer entrant)))
            (GET "/track/:trackId" [] (response {:raceStatus "waiting" :entrants [{}]}))
            (POST "/thing" {stuff :body} (response (create stuff))))
 
@@ -28,7 +34,7 @@
       (json/wrap-json-response)))
 
 (defn start [port]
-  (ring/run-jetty application {:port port
+  (ring/run-jetty application {:port  port
                                :join? false}))
 
 (defn -main []
