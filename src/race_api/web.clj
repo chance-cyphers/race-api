@@ -5,6 +5,7 @@
             [ring.util.response :refer [response status]]
             [compojure.handler :as handler]
             [race-api.match :as match]
+            [race-api.track :as track]
             [race-api.config :refer [service-url]])
   (:gen-class))
 
@@ -20,7 +21,7 @@
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
            (POST "/entrant" {entrant :body} (post-entrant-response (match/enter-racer entrant)))
-           (GET "/track/:trackId" [] (response {:raceStatus "waiting" :entrants [{}]})))
+           (GET "/track/:trackId" [trackId] (response (track/get-track (Integer/parseInt trackId)))))
 
 (def application
   (-> (handler/api routes)
