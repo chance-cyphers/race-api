@@ -4,9 +4,8 @@
             [ring.middleware.json :as json]
             [ring.util.response :refer [response status]]
             [compojure.handler :as handler]
-            [race-api.db.query :as query]
             [race-api.match :as match]
-            [clojure.string :as str])
+            [race-api.config :refer [service-url]])
   (:gen-class))
 
 (defn index []
@@ -16,7 +15,7 @@
   (status (response
             {:id     (:id entrant)
              :userId (:userId entrant)
-             :links  {:track (str "localhost:8080/track" (:trackId entrant))}}) 201))
+             :links  {:track (str service-url "/track" (:trackId entrant))}}) 201))
 
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
