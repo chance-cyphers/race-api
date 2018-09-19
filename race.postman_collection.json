@@ -7,7 +7,6 @@
 	"item": [
 		{
 			"name": "match",
-			"description": "",
 			"item": [
 				{
 					"name": "first entrant",
@@ -15,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5074bde3-239d-4d5e-b492-bc1927f2fc6b",
+								"id": "ee90f57c-7966-4b30-bfda-f12ca6023cde",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"status is one more than good\", function() {",
@@ -23,13 +22,13 @@
 									"});",
 									"",
 									"pm.test(\"returns resource\", function() {",
-									"    pm.expect(pm.response.json().userId).to.equal(\"1\");",
+									"    pm.expect(pm.response.json().userId).to.equal(\"frankieMuniz\");",
 									"});",
 									"",
 									"pm.test(\"returns link for track\", function() {",
 									"    let body = pm.response.json();",
 									"    pm.expect(body.links.track).to.include(\"/track\");",
-									"    pm.globals.set(\"firstTrackLink\", body.links.track); ",
+									"    pm.environment.set(\"firstTrackLink\", body.links.track);",
 									"});"
 								]
 							}
@@ -45,14 +44,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userId\": \"1\"\n}"
+							"raw": "{\n\t\"userId\": \"frankieMuniz\"\n}"
 						},
 						"url": {
-							"raw": "localhost:8080/entrant",
+							"raw": "{{race_url}}/entrant",
 							"host": [
-								"localhost"
+								"{{race_url}}"
 							],
-							"port": "8080",
 							"path": [
 								"entrant"
 							]

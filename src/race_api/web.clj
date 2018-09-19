@@ -10,11 +10,7 @@
   (:gen-class))
 
 (defn index []
-  (into [] (query/get-all-things)))
-
-(defn create [thing]
-  (when-not (str/blank? (str thing))
-    (query/insert-thing (str thing))))
+  (str "welcome to race place"))
 
 (defn post-entrant-response [entrant]
   (status (response
@@ -25,8 +21,7 @@
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
            (POST "/entrant" {entrant :body} (post-entrant-response (match/enter-racer entrant)))
-           (GET "/track/:trackId" [] (response {:raceStatus "waiting" :entrants [{}]}))
-           (POST "/thing" {stuff :body} (response (create stuff))))
+           (GET "/track/:trackId" [] (response {:raceStatus "waiting" :entrants [{}]})))
 
 (def application
   (-> (handler/api routes)
