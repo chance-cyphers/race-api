@@ -5,7 +5,7 @@
   (query/update-track-status (:id track) "started"))
 
 (defn find-track []
-  (let [ready-tracks (query/get-track-with-status "waiting")]
+  (let [ready-tracks (query/get-tracks {:status "waiting"})]
     (if (> (count ready-tracks) 0)
       (start-race (first ready-tracks))
       (query/create-track "waiting"))))

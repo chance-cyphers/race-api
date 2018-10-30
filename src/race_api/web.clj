@@ -33,5 +33,5 @@
                                :join? false}))
 
 (defn -main []
-  (let [port (Integer. (or (System/getenv "PORT") "8080"))]
+  (let [port (Integer. (or (System/getenv "PORT") "8088"))]
     (start port)))

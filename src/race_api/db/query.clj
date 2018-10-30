@@ -3,17 +3,17 @@
   (:use [korma.core]))
 
 (defentity entrant)
-(defentity track)
+(defentity track
+           (has-many entrant {:fk :trackId}))
 
 (defn insert-entrant [entrantData]
   (insert entrant (values {:userId (get entrantData "userId")
                            :trackId (get entrantData "trackId")})))
 
-(defn get-entrants-by-track [trackId]
-  (select entrant (where {:trackId trackId})))
-
-(defn get-track-with-status [status]
-  (select track (where {:status status})))
+(defn get-tracks [criteria]
+  (select track
+          (with entrant)
+          (where criteria)))
 
 (defn get-track [id]
   (first (select track (where {:id id}))))
