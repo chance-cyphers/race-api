@@ -12,15 +12,9 @@
 (defn index []
   (str "welcome to race place"))
 
-(defn post-entrant-response [entrant]
-  (status (response
-            {:id     (:id entrant)
-             :userId (:userId entrant)
-             :links  {:track (str service-url "/track/" (:trackId entrant))}}) 201))
-
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
-           (POST "/entrant" {entrant :body} (post-entrant-response (match/enter-racer entrant)))
+           (POST "/entrant" {entrant :body} (match/enter-racer entrant))
            (GET "/track/:trackId" [trackId] (response (track/get-track (Integer/parseInt trackId)))))
 
 (def application
