@@ -16,7 +16,7 @@
     (println (pr-str "all waiting: " tracks))
     (filter #(track-contains-user % username) tracks)))
 
-(defn check-for-old-tracks [entrant]
+(defn cancel-old-tracks [entrant]
   (-> (query/get-tracks {:status "waiting"})
       (filter-bad-tracks entrant)
       (cancel-races)))
@@ -41,7 +41,7 @@
 
 
 (defn enter-racer [entrant]
-  (check-for-old-tracks entrant)
+  (cancel-old-tracks entrant)
   (-> (get-next-track)
       (insert-entrant entrant)
       (response)))
