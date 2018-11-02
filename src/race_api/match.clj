@@ -1,18 +1,18 @@
 (ns race-api.match
   (:require [race-api.db.query :as query]
-            [ring.util.response :refer [response status]]
-            [race-api.config :refer [service-url]]))
+            [ring.util.response :as response]
+            [race-api.config :as config]))
 
 (defn track-contains-user [track username]
   (some #(= (:userId %) username) (:entrant track)))
 
-(defn filter-bad-tracks [tracks entrant]
-  (let [username (:userId entrant)]
-    (filter #(track-contains-user % username) tracks)))
-
 (defn cancel-races [tracks]
   (doseq [t tracks]
     (query/update-track-status (:id t) "cancelled")))
+
+(defn filter-bad-tracks [tracks entrant]
+  (let [username (:userId entrant)]
+    (filter #(track-contains-user % username) tracks)))
 
 (defn check-for-old-tracks [entrant]
   (-> (query/get-tracks {:status "waiting"})
@@ -31,15 +31,15 @@
   (query/insert-entrant (into {"trackId" (:id track)} entrant)))
 
 
-(defn entrant-response [entrant]
-  (status (response
+(defn response [entrant]
+  (response/status (response/response
             {:id     (:id entrant)
              :userId (:userId entrant)
-             :links  {:track (str service-url "/track/" (:trackId entrant))}}) 201))
+             :links  {:track (str config/service-url "/track/" (:trackId entrant))}}) 201))
 
 
 (defn enter-racer [entrant]
   (check-for-old-tracks entrant)
   (-> (get-next-track)
       (insert-entrant entrant)
-      (entrant-response)))
+      (response)))
