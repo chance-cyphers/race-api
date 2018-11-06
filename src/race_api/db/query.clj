@@ -29,3 +29,12 @@
 
 (defn insert-location [locData]
   (insert location (values locData)))
+
+(defn delete-all-tracks []
+  (delete track))
+
+(defn delete-all-entrants []
+  (delete entrant))
+
+(defn delete-all-locations []
+  (delete location))

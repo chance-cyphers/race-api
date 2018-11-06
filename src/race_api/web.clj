@@ -1,11 +1,12 @@
 (ns race-api.web
-  (:require [compojure.core :refer [defroutes GET POST]]
+  (:require [compojure.core :refer [defroutes GET POST DELETE]]
             [ring.adapter.jetty :as ring]
             [ring.middleware.json :as json]
             [ring.util.response :refer [response status]]
             [compojure.handler :as handler]
             [race-api.match :as match]
             [race-api.track :as track]
+            [race-api.everything :as all]
             [race-api.config :refer [service-url]])
   (:gen-class))
 
@@ -14,6 +15,7 @@
 
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
+           (DELETE "/everything-on-earth" [] (all/delete))
            (POST "/entrant" {entrant :body} (match/enter-racer entrant))
            (GET "/track/:trackId" [trackId] (response (track/get-track (Integer/parseInt trackId))))
            (POST "/track/:trackId/user/:userId/location" { params :params body :body}

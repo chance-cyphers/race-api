@@ -7,13 +7,11 @@
   (some #(= (:userId %) username) (:entrant track)))
 
 (defn cancel-races [tracks]
-  (println (pr-str "bad tracks: " tracks))
   (doseq [t tracks]
     (query/update-track-status (:id t) "cancelled")))
 
 (defn filter-bad-tracks [tracks entrant]
   (let [username (get entrant "userId")]
-    (println (pr-str "all waiting: " tracks))
     (filter #(track-contains-user % username) tracks)))
 
 (defn cancel-old-tracks [entrant]
