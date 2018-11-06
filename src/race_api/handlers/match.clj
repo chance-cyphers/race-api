@@ -11,7 +11,7 @@
     (query/update-track-status (:id t) "cancelled")))
 
 (defn filter-bad-tracks [tracks entrant]
-  (let [username (get entrant "userId")]
+  (let [username (:userId entrant)]
     (filter #(track-contains-user % username) tracks)))
 
 (defn cancel-old-tracks [entrant]
@@ -28,7 +28,7 @@
 
 
 (defn insert-entrant [track entrant]
-  (query/insert-entrant (into {"trackId" (:id track)} entrant)))
+  (query/insert-entrant (into {:trackId (:id track)} entrant)))
 
 
 (defn response [entrant]

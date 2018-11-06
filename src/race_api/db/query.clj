@@ -8,8 +8,7 @@
 (defentity location)
 
 (defn insert-entrant [entrantData]
-  (insert entrant (values {:userId (get entrantData "userId")
-                           :trackId (get entrantData "trackId")})))
+  (insert entrant (values entrantData)))
 
 (defn get-tracks [criteria]
   (select track

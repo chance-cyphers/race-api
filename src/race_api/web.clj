@@ -23,7 +23,7 @@
 
 (def application
   (-> (handler/api routes)
-      (json/wrap-json-body)
+      (json/wrap-json-body {:keywords? true})
       (json/wrap-json-response)))
 
 (defn start [port]
