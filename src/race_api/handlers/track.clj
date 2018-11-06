@@ -2,7 +2,7 @@
   (:require [race-api.db.query :as query]
             [race-api.config :as config]))
 
-(defn entrant-locations [entrants]
+(defn entrant-location-links [entrants]
   (let [host config/service-url]
     (map #(str host "/entrant/" (:id %) "/location") entrants)))
 
@@ -12,4 +12,4 @@
     {:id       (:id track)
      :status   (:status track)
      :entrants entrants
-     :links    {:entrantLocations (entrant-locations entrants)}}))
+     :links    {:entrantLocations (entrant-location-links entrants)}}))
