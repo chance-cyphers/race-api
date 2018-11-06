@@ -15,7 +15,7 @@
            (GET "/" [] (response {:body "welcome to race place"}))
            (DELETE "/everything-on-earth" [] (all/delete))
            (POST "/entrant" {entrant :body} (match/enter-racer entrant))
-           (GET "/track/:trackId" [trackId] (track/get-track (Integer/parseInt trackId)))
+           (GET "/track/:trackId" [trackId] (response (track/get-track (Integer/parseInt trackId))))
            (POST "/entrant/:entrantId/location" { params :params body :body}
              (loc/update-location (Integer/parseInt (:entrantId params)) body)))
 
