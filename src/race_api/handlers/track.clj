@@ -1,4 +1,4 @@
-(ns race-api.track
+(ns race-api.handlers.track
   (:require [race-api.db.query :as query]))
 
 (defn get-track [trackId]

@@ -1,4 +1,4 @@
-(ns race-api.match
+(ns race-api.handlers.match
   (:require [race-api.db.query :as query]
             [ring.util.response :as response]
             [race-api.config :as config]))

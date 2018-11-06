@@ -1,5 +1,4 @@
-(ns race-api.location)
-
+(ns race-api.handlers.location)
 
 
 (defn insert-location [])

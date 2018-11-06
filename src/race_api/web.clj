@@ -4,9 +4,9 @@
             [ring.middleware.json :as json]
             [ring.util.response :refer [response status]]
             [compojure.handler :as handler]
-            [race-api.match :as match]
-            [race-api.track :as track]
-            [race-api.everything :as all]
+            [race-api.handlers.match :as match]
+            [race-api.handlers.track :as track]
+            [race-api.handlers.everything :as all]
             [race-api.config :refer [service-url]])
   (:gen-class))
 
