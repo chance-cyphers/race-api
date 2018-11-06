@@ -15,7 +15,9 @@
 (defroutes routes
            (GET "/" [] (response {:body (index)}))
            (POST "/entrant" {entrant :body} (match/enter-racer entrant))
-           (GET "/track/:trackId" [trackId] (response (track/get-track (Integer/parseInt trackId)))))
+           (GET "/track/:trackId" [trackId] (response (track/get-track (Integer/parseInt trackId))))
+           (POST "/track/:trackId/user/:userId/location" { params :params body :body}
+             (response {:track (:trackId params) :userId (:userId params) :body body})))
 
 (def application
   (-> (handler/api routes)

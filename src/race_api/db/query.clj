@@ -5,6 +5,7 @@
 (defentity entrant)
 (defentity track
            (has-many entrant {:fk :trackId}))
+(defentity location)
 
 (defn insert-entrant [entrantData]
   (insert entrant (values {:userId (get entrantData "userId")
@@ -25,3 +26,6 @@
   (update track
           (set-fields {:status status})
           (where {:id trackId})))
+
+(defn insert-location [locData]
+  (insert location (values locData)))
