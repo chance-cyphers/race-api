@@ -7,6 +7,7 @@
             [race-api.handlers.match :as match]
             [race-api.handlers.track :as track]
             [race-api.handlers.everything :as all]
+            [race-api.handlers.location :as loc]
             [race-api.config :refer [service-url]])
   (:gen-class))
 
@@ -18,8 +19,8 @@
            (DELETE "/everything-on-earth" [] (all/delete))
            (POST "/entrant" {entrant :body} (match/enter-racer entrant))
            (GET "/track/:trackId" [trackId] (response (track/get-track (Integer/parseInt trackId))))
-           (POST "/track/:trackId/user/:userId/location" { params :params body :body}
-             (response {:track (:trackId params) :userId (:userId params) :body body})))
+           (POST "/entrant/:entrantId/location" { params :params body :body}
+             (loc/update-location (Integer/parseInt (:entrantId params)) body)))
 
 (def application
   (-> (handler/api routes)
