@@ -11,11 +11,8 @@
             [race-api.config :refer [service-url]])
   (:gen-class))
 
-(defn index []
-  (str "welcome to race place"))
-
 (defroutes routes
-           (GET "/" [] (response {:body (index)}))
+           (GET "/" [] (response {:body "welcome to race place"}))
            (DELETE "/everything-on-earth" [] (all/delete))
            (POST "/entrant" {entrant :body} (match/enter-racer entrant))
            (GET "/track/:trackId" [trackId] (response (track/get-track (Integer/parseInt trackId))))
