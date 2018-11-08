@@ -10,6 +10,7 @@
                  [ring/ring-json "0.4.0"]
                  [korma "0.3.0-RC5"]
                  [lobos "1.0.0-beta1"]
+                 [haversine "0.1.1"]
                  [compojure "1.4.0"]]
   :main ^:skip-aot race-api.web
   :uberjar-name "race-api-standalone.jar"
