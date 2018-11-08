@@ -4,7 +4,6 @@
             [haversine.core :as haversine]))
 
 (defn leg-distance [leg]
-  (println leg)
   (let [first-coord (first leg)
         second-coord (nth leg 1)]
     (haversine/haversine
