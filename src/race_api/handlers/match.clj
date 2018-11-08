@@ -30,14 +30,7 @@
 (defn insert-entrant [track entrant]
   (query/insert-entrant (into {:trackId (:id track)} entrant)))
 
-
 (defn response [entrant]
-  (response/status (response/response
-                     {:id     (:id entrant)
-                      :userId (:userId entrant)
-                      :links  {:track (str config/service-url "/track/" (:trackId entrant))}}) 201))
-
-(defn response-v2 [entrant]
   (response/status
     (response/response
       {:id     (:id entrant)
@@ -50,9 +43,3 @@
   (-> (get-next-track)
       (insert-entrant entrant)
       (response)))
-
-(defn enter-racer-v2 [entrant]
-  (cancel-old-tracks entrant)
-  (-> (get-next-track)
-      (insert-entrant entrant)
-      (response-v2)))
