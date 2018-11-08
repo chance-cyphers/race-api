@@ -3,10 +3,18 @@
             [ring.util.response :as response]
             [haversine.core :as haversine]))
 
-(defn distance [lat1 lon1 lat2 lon2]
-  (haversine/haversine {:latitude lat1 :longitude lon1} {:latitude lat2 :longitude lon2}))
+(defn leg-distance [leg]
+  (println leg)
+  (let [first-coord (first leg)
+        second-coord (nth leg 1)]
+    (haversine/haversine
+      {:latitude (:lat first-coord) :longitude (:lon first-coord)}
+      {:latitude (:lat second-coord) :longitude (:lon second-coord)})))
+
 (defn total-distance [locs]
-  (reduce distance (map #() locs)))
+  (let [legs (partition 2 1 locs)]
+    (reduce (fn [state next] (+ (leg-distance next) state)) 0 legs)))
+
 
 (defn loc-data [entrant-id location]
   (vector (into {:entrantId entrant-id} location)))
