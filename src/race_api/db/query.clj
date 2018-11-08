@@ -10,7 +10,12 @@
 (defn insert-entrant [entrantData]
   (insert entrant (values entrantData)))
 
-(defn get-tracks [criteria]
+(defn update-entrant [fields criteria]
+  (update entrant
+          (set-fields fields)
+          (where criteria)))
+
+(defn get-tracks-with-entrants [criteria]
   (select track
           (with entrant)
           (where criteria)))
@@ -25,6 +30,9 @@
 
 (defn insert-location [locData]
   (insert location (values locData)))
+
+(defn get-locations [criteria]
+  (select location (where criteria)))
 
 (defn delete-all-tracks []
   (delete track))

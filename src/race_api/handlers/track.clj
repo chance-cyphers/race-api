@@ -7,7 +7,7 @@
     (map #(str host "/entrant/" (:id %) "/location") entrants)))
 
 (defn get-track [trackId]
-  (let [track (first (query/get-tracks {:id trackId}))
+  (let [track (first (query/get-tracks-with-entrants {:id trackId}))
         entrants (:entrant track)]
     {:id       (:id track)
      :status   (:status track)

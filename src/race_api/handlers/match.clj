@@ -15,13 +15,13 @@
     (filter #(track-contains-user % username) tracks)))
 
 (defn cancel-old-tracks [entrant]
-  (-> (query/get-tracks {:status "waiting"})
+  (-> (query/get-tracks-with-entrants {:status "waiting"})
       (filter-bad-tracks entrant)
       (cancel-races)))
 
 
 (defn get-next-track []
-  (let [ready-tracks (query/get-tracks {:status "waiting"})]
+  (let [ready-tracks (query/get-tracks-with-entrants {:status "waiting"})]
      (if (> (count ready-tracks) 0)
        (query/update-track-status (:id (first ready-tracks)) "started")
        (query/create-track "waiting"))))

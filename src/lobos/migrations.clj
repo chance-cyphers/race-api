@@ -4,7 +4,7 @@
   (:use (lobos [migration :only [defmigration]] core schema) lobos.config))
 
 
-;create table entrant (id serial primary key, "trackId" integer, "userId" varchar(64));
+;create table entrant (id serial primary key, "trackId" integer, "userId" varchar(64), "distance" decimal);
 (defmigration create-entrant
               (up [] (create(table :entrant
                                    (integer :id :auto-inc :primary-key)
