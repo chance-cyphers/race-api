@@ -22,9 +22,9 @@
 
 (defn get-next-track []
   (let [ready-tracks (query/get-tracks-with-entrants {:status "waiting"})]
-     (if (> (count ready-tracks) 0)
-       (query/update-track-status (:id (first ready-tracks)) "started")
-       (query/create-track "waiting"))))
+    (if (> (count ready-tracks) 0)
+      (query/update-track-status (:id (first ready-tracks)) "started")
+      (query/create-track "waiting"))))
 
 
 (defn insert-entrant [track entrant]
@@ -33,13 +33,26 @@
 
 (defn response [entrant]
   (response/status (response/response
-            {:id     (:id entrant)
-             :userId (:userId entrant)
-             :links  {:track (str config/service-url "/track/" (:trackId entrant))}}) 201))
+                     {:id     (:id entrant)
+                      :userId (:userId entrant)
+                      :links  {:track (str config/service-url "/track/" (:trackId entrant))}}) 201))
 
+(defn response-v2 [entrant]
+  (response/status
+    (response/response
+      {:id     (:id entrant)
+       :userId (:userId entrant)
+       :links  {:track
+                (str config/service-url "/track/" (:trackId entrant) "/entrant/" (:id entrant))}}) 201))
 
 (defn enter-racer [entrant]
   (cancel-old-tracks entrant)
   (-> (get-next-track)
       (insert-entrant entrant)
       (response)))
+
+(defn enter-racer-v2 [entrant]
+  (cancel-old-tracks entrant)
+  (-> (get-next-track)
+      (insert-entrant entrant)
+      (response-v2)))
