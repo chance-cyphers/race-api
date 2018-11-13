@@ -20,4 +20,4 @@
      :status   (:status track)
      :entrants entrants
      :links    {:locationUpdate (entrant-location-link entrants entrant-id)
-                :self (self-link track entrant-id)}}))
+                :self           (self-link track entrant-id)}}))
