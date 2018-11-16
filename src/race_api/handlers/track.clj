@@ -19,10 +19,17 @@
                   :userId (:userId %)
                   :distance (:distance %)) entrants))
 
+(defn winner [entrants]
+  (->> entrants
+       (filter #(> (:distance %) 1.0))
+       (first)
+       (:userId)))
+
 (defn resource [track entrants entrant-id]
   {:id       (:id track)
    :status   (:status track)
    :entrants (entrants-resource entrants)
+   ;:winner   (winner entrants)
    :links    {:locationUpdate (entrant-location-link entrants entrant-id)
               :self           (self-link track entrant-id)}})
 
