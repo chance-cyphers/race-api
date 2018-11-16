@@ -16,8 +16,8 @@
            (DELETE "/everything-on-earth" [] (all/delete))
            (POST "/v2/entrant" {entrant :body} (match/enter-racer entrant))
            (GET "/track/:trackId/entrant/:entrantId" [trackId entrantId]
-             (response (track/get-track (Integer/parseInt trackId) (Integer/parseInt entrantId))))
-           (POST "/entrant/:entrantId/location" { params :params body :body}
+             (track/get-track (Integer/parseInt trackId) (Integer/parseInt entrantId)))
+           (POST "/entrant/:entrantId/location" {params :params body :body}
              (loc/handle-loc-update (Integer/parseInt (:entrantId params)) body)))
 
 (def application
