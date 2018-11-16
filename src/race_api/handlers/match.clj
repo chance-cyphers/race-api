@@ -28,7 +28,7 @@
 
 
 (defn insert-entrant [track entrant]
-  (query/insert-entrant (into {:trackId (:id track)} entrant)))
+  (query/insert-entrant (into {:trackId (:id track) :distance 0.0} entrant)))
 
 (defn response [entrant]
   (response/status
