@@ -29,7 +29,7 @@
   {:id       (:id track)
    :status   (:status track)
    :entrants (entrants-resource entrants)
-   ;:winner   (winner entrants)
+   :winner   (winner entrants)
    :links    {:locationUpdate (entrant-location-link entrants entrant-id)
               :self           (self-link track entrant-id)}})
 
