@@ -25,11 +25,16 @@
 (defn update-entrant [distance entrant-id]
   (query/update-entrant {:distance distance} {:id entrant-id}))
 
+(defn update-track [entrant]
+  (when (> (:distance entrant) 1.0)
+    (query/update-track {:status "finished"} {:id (:trackId entrant)})))
+
 (defn update-distance [entrant-id]
   (-> entrant-id
       (get-all-locs)
       (total-distance)
-      (update-entrant entrant-id)))
+      (update-entrant entrant-id)
+      (update-track)))
 
 (defn update-location [entrant-id location]
   (-> (loc-data entrant-id location)

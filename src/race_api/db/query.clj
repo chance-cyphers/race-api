@@ -7,6 +7,8 @@
            (has-many entrant {:fk :trackId}))
 (defentity location)
 
+
+
 (defn insert-entrant [entrantData]
   (insert entrant (values entrantData)))
 
@@ -14,6 +16,8 @@
   (update entrant
           (set-fields fields)
           (where criteria)))
+
+
 
 (defn get-tracks-with-entrants [criteria]
   (select track
@@ -27,6 +31,14 @@
   (update track
           (set-fields {:status status})
           (where {:id trackId})))
+
+(defn update-track [fields criteria]
+  (update track
+          (set-fields fields)
+          (where criteria)))
+
+
+
 
 (defn insert-location [locData]
   (insert location (values locData)))
