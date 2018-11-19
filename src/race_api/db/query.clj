@@ -24,6 +24,11 @@
           (with entrant)
           (where criteria)))
 
+(defn get-track [id]
+  (first (select track
+                 (where {:id id})
+                 (limit 1))))
+
 (defn create-track [status]
   (insert track (values {:status status})))
 

@@ -41,7 +41,13 @@
       (query/insert-location)
       (response/response)))
 
+(defn race-is-done [track-id]
+  (let [track (query/get-track track-id)]
+    (not= "started" (:status track))))
+
 (defn handle-loc-update [entrant-id track-id location]
-  (let [response (update-location entrant-id location)]
-    (update-distance entrant-id)
-    response))
+  (if (race-is-done track-id)
+    (response/status (response/response {:message "location updates not allowed after race is finished"}) 410)
+    (let [response (update-location entrant-id location)]
+      (update-distance entrant-id)
+      response)))
