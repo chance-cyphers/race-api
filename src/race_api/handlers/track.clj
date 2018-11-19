@@ -3,12 +3,12 @@
             [race-api.config :as config]
             [ring.util.response :as response]))
 
-(defn entrant-location-link [entrants entrant-id]
+(defn entrant-location-link [entrants entrant-id track]
   (let [host config/service-url]
     (as-> entrants e
           (filter #(= (:id %) entrant-id) e)
           (first e)
-          (str host "/entrant/" (:id e) "/location"))))
+          (str host "/track/" (:id track) "/entrant/" (:id e) "/location"))))
 
 (defn self-link [track entrant-id]
   (let [host config/service-url]
@@ -30,7 +30,7 @@
    :status   (:status track)
    :entrants (entrants-resource entrants)
    :winner   (winner entrants)
-   :links    {:locationUpdate (entrant-location-link entrants entrant-id)
+   :links    {:locationUpdate (entrant-location-link entrants entrant-id track)
               :self           (self-link track entrant-id)}})
 
 (defn get-track [track-id entrant-id]

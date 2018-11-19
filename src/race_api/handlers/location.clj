@@ -41,7 +41,7 @@
       (query/insert-location)
       (response/response)))
 
-(defn handle-loc-update [entrant-id location]
+(defn handle-loc-update [entrant-id track-id location]
   (let [response (update-location entrant-id location)]
     (update-distance entrant-id)
     response))

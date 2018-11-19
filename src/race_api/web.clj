@@ -17,18 +17,21 @@
            (POST "/v2/entrant" {entrant :body} (match/enter-racer entrant))
            (GET "/track/:trackId/entrant/:entrantId" [trackId entrantId]
              (track/get-track (Integer/parseInt trackId) (Integer/parseInt entrantId)))
-           (POST "/entrant/:entrantId/location" {params :params body :body}
-             (loc/handle-loc-update (Integer/parseInt (:entrantId params)) body)))
+           (POST "/track/:trackId/entrant/:entrantId/location" {params :params body :body}
+             (loc/handle-loc-update
+               (Integer/parseInt (:entrantId params))
+               (Integer/parseInt (:trackId params))
+                                 body)))
 
-(def application
-  (-> (handler/api routes)
-      (json/wrap-json-body {:keywords? true})
-      (json/wrap-json-response)))
+           (def application
+             (-> (handler/api routes)
+                 (json/wrap-json-body {:keywords? true})
+                 (json/wrap-json-response)))
 
-(defn start [port]
-  (ring/run-jetty application {:port  port
-                               :join? false}))
+           (defn start [port]
+             (ring/run-jetty application {:port  port
+                                          :join? false}))
 
-(defn -main []
-  (let [port (Integer. (or (System/getenv "PORT") "8088"))]
-    (start port)))
+           (defn -main []
+             (let [port (Integer. (or (System/getenv "PORT") "8088"))]
+               (start port)))
