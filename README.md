@@ -1,9 +1,2 @@
 # race-api
-One day this will help you to race people!
-
-## License
-
-Copyright © 2018 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+This will help you to race people! It's the backend for both versions of the Race Place mobile app
