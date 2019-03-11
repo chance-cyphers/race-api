@@ -1,0 +1,174 @@
+swagger: "2.0"
+info:
+  description: "This is an API for racing people. It is the backend for Race Place."
+  version: "1.0.0"
+  title: "Race Place API"
+host: "race-api.herokuapp.com"
+tags:
+- name: "entrant"
+  description: "People who enter races"
+- name: "track"
+  description: "Contains race data and relates entrants"
+- name: "location"
+  description: "Racer location updates"
+schemes:
+- "https"
+- "http"
+paths:
+  /entrant:
+    post:
+      tags:
+      - "entrant"
+      summary: "Enter user into a race"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Pet object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/EntrantRequest"
+      responses:
+        201:
+          description: "Create Success"
+          schema:
+            items:
+              $ref: "#/definitions/EntrantResponse"
+  /track/{trackId}/entrant/{entrantId}:
+    get:
+      tags:
+      - "track"
+      summary: "Get track for entrant"
+      description: "Same trackId will give different track depending on requesting entrant. Link should be retrieved from POST /entrant response link. Winner will be empty if race is still in progress"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "trackId"
+        description: "ID of track to fetch"
+        required: true
+        type: "integer"
+      - in: "path"
+        name: "entrantId"
+        description: "ID of entrant for which the track is being fetched"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Successful fetch"
+          schema:
+            items:
+              $ref: "#/definitions/Track"
+  /track/{trackId}/entrant/{entrantId}/location:
+    post:
+      tags:
+      - "location"
+      summary: "Update entrant location"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Location"
+      - name: "trackId"
+        in: "path"
+        required: true
+        type: "integer"
+      - name: "entrantId"
+        in: "path"
+        required: true
+        type: "integer"
+      responses:
+        201:
+          description: "Successful operation"
+          schema:
+            type: "object"
+            items:
+              $ref: "#/definitions/Location"
+definitions:
+  Location:
+    type: "object"
+    properties:
+      time:
+        type: "integer"
+        description: "millis since epoch, probably"
+        format: "int64"
+      lat:
+        type: "number"
+      lon:
+        type: "number"
+  Track:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      status:
+        type: "string"
+        example: "started"
+        enum:
+        - "started"
+        - "waiting"
+        - "finished"
+        - "cancelled"
+      winner:
+        type: "string"
+        example: ""
+      entrants:
+        items:
+          $ref: "#/definitions/TrackEntrant"
+      links:
+        $ref: "#/definitions/TrackLinks"
+  TrackEntrant:
+    type: "object"
+    properties:
+      trackId:
+        type: "integer"
+        example: 23
+      userId:
+        type: "string"
+        example: "bob1970"
+      distance:
+        type: "number"
+        example: .7213
+        description: "distance in km"
+  EntrantRequest:
+    type: "object"
+    required:
+    - "userId"
+    properties:
+      userId:
+        type: "string"
+        example: "stunner91"
+    xml:
+      name: "Pet"
+  EntrantResponse:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      userId:
+        type: "string"
+        example: "bob1976"
+      links:
+        $ref: "#/definitions/EntrantLinks"
+  TrackLinks:
+    type: "object"
+    properties:
+      locationUpdate:
+        type: "string"
+        example: "https://<location-update-for-{entrantId}>"
+      self:
+        type: "string"
+        example: "https://<link-for-this-track>"
+  EntrantLinks:
+    type: "object"
+    properties:
+      trackLink:
+        type: string
+        example: "https://<link-to-entrants-track>.com"
