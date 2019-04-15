@@ -12,5 +12,6 @@ pom.xml.asc
 
 # don't ask
 /pg
+
 /.idea
 *.iml
