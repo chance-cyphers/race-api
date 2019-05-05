@@ -1,14 +1,11 @@
 (ns race-api.kafka
-  (:import (org.apache.kafka.clients.producer ProducerRecord KafkaProducer)
-           (java.util.concurrent Future)))
+  (:import (org.apache.kafka.clients.producer ProducerRecord KafkaProducer)))
 
 (def kafka-brokers (System/getenv "CLOUDKARAFKA_BROKERS"))
 (def kafka-username (System/getenv "CLOUDKARAFKA_USERNAME"))
 (def kafka-password (System/getenv "CLOUDKARAFKA_PASSWORD"))
 
 (defn producer []
-  (println (str "creating producer with username: " kafka-username
-                ", password: " kafka-password))
   (KafkaProducer. {"bootstrap.servers" kafka-brokers
                    "key.serializer"    "org.apache.kafka.common.serialization.StringSerializer"
                    "value.serializer"  "org.apache.kafka.common.serialization.StringSerializer"
@@ -22,6 +19,4 @@
                                             "\";")}))
 
 (defn send-message [topic msg]
-  (println (str "sending msg to topic: " (str kafka-username "-" topic)))
-  (.send (producer) (ProducerRecord. (str kafka-username "-" topic) msg))
-  (println "we returned from send, it seems"))
+  (.send (producer) (ProducerRecord. (str kafka-username "-" topic) msg)))
