@@ -14,7 +14,8 @@
   (:gen-class))
 
 (defn handle-kafka []
-  (response {:body (kafka/send-message "default" "hello from race api")}))
+  (kafka/send-message "default" "hello from race api")
+  (response {:body "all good, probably"}))
 
 (defn handle-home []
   (response {:body "welcome to race place"}))
