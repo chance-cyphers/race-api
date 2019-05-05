@@ -3,8 +3,8 @@
            (java.util.concurrent Future)))
 
 (def kafka-brokers (System/getenv "CLOUDKARAFKA_BROKERS"))
-(def kafka-username (System/getenv "CLOUDKARAFKA_BROKERS"))
-(def kafka-password (System/getenv "CLOUDKARAFKA_BROKERS"))
+(def kafka-username (System/getenv "CLOUDKARAFKA_USERNAME"))
+(def kafka-password (System/getenv "CLOUDKARAFKA_PASSWORD"))
 
 (defn producer []
   (println (str "creating producer with username: " kafka-username
