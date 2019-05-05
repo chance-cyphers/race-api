@@ -5,7 +5,7 @@
 (def kafka-username (System/getenv "CLOUDKARAFKA_BROKERS"))
 (def kafka-password (System/getenv "CLOUDKARAFKA_BROKERS"))
 
-(defn producer
+(defn producer []
   (KafkaProducer. {"bootstrap.servers" kafka-brokers
                    "key.serializer"    "org.apache.kafka.common.serialization.StringSerializer"
                    "value.serializer"  "org.apache.kafka.common.serialization.StringSerializer"

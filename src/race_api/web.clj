@@ -13,7 +13,7 @@
             [race-api.config :refer [service-url]])
   (:gen-class))
 
-(defn handle-kafka
+(defn handle-kafka []
   (kafka/send-message "default" "hello from race api"))
 
 (defn handle-home []
