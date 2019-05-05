@@ -1,5 +1,6 @@
 (ns race-api.kafka
-  (:import (org.apache.kafka.clients.producer ProducerRecord KafkaProducer)))
+  (:import (org.apache.kafka.clients.producer ProducerRecord KafkaProducer)
+           (java.util.concurrent Future)))
 
 (def kafka-brokers (System/getenv "CLOUDKARAFKA_BROKERS"))
 (def kafka-username (System/getenv "CLOUDKARAFKA_BROKERS"))
@@ -19,4 +20,5 @@
                                             "\";")}))
 
 (defn send-message [topic msg]
-  (.send (producer) (ProducerRecord. (str kafka-username "-" topic) msg)))
+  (.get
+    (.send (producer) (ProducerRecord. (str kafka-username "-" topic) msg))))
