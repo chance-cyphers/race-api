@@ -7,6 +7,9 @@
 (def kafka-password (System/getenv "CLOUDKARAFKA_BROKERS"))
 
 (defn producer []
+  (println (str "creating producer with brokers: " kafka-brokers
+                ", username: " kafka-username
+                ", password: " kafka-password))
   (KafkaProducer. {"bootstrap.servers" kafka-brokers
                    "key.serializer"    "org.apache.kafka.common.serialization.StringSerializer"
                    "value.serializer"  "org.apache.kafka.common.serialization.StringSerializer"
@@ -20,5 +23,6 @@
                                             "\";")}))
 
 (defn send-message [topic msg]
-  (.get
-    (.send (producer) (ProducerRecord. (str kafka-username "-" topic) msg))))
+  (println (str "sending msg to topic: " topic))
+  (.send (producer) (ProducerRecord. (str kafka-username "-" topic) msg)
+         (println "we returned from send, it seems")))

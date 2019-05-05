@@ -21,7 +21,6 @@
 
 (defroutes routes
            (GET "/" [] (handle-home))
-           (GET "/new" [] (response {:body "sup"}))
            (GET "/kafka-test" [] (handle-kafka))
            (DELETE "/everything-on-earth" [] (all/delete))
            (POST "/v2/entrant" {entrant :body} (match/enter-racer entrant))
