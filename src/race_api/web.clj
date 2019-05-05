@@ -8,21 +8,20 @@
             [race-api.handlers.track :as track]
             [race-api.handlers.everything :as all]
             [race-api.handlers.location :as loc]
-            [kinsky.client :as client]
-            [kinsky.async :as async]
+            [race-api.kafka :as kafka]
             [clojure.core.async :as a :refer [go <! >!]]
             [race-api.config :refer [service-url]])
   (:gen-class))
 
+(defn handle-kafka
+  (kafka/send-message "default" "hello from race api"))
+
 (defn handle-home []
-  (let [p (client/producer {:bootstrap.servers "localhost:9092"}
-                           (client/keyword-serializer)
-                           (client/edn-serializer))]
-    (client/send! p "race-result" :race-result {:winner "bob"}))
   (response {:body "welcome to race place"}))
 
 (defroutes routes
            (GET "/" [] (handle-home))
+           (GET "/kafka-test" [] (handle-kafka))
            (DELETE "/everything-on-earth" [] (all/delete))
            (POST "/v2/entrant" {entrant :body} (match/enter-racer entrant))
            (GET "/track/:trackId/entrant/:entrantId" [trackId entrantId]

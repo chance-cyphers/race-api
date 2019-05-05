@@ -12,6 +12,7 @@
                  [lobos "1.0.0-beta1"]
                  [haversine "0.1.1"]
                  [spootnik/kinsky "0.1.23"]
+                 [org.apache.kafka/kafka-clients "1.1.0"]
                  [compojure "1.4.0"]]
   :main ^:skip-aot race-api.web
   :uberjar-name "race-api-standalone.jar"
